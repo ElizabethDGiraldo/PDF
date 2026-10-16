@@ -16,18 +16,20 @@ construida con **FastAPI**, usando plantillas **Jinja2** para el HTML y la libre
   en la etiqueta `img`.
 - El patron **preview HTML -> descargar PDF** se repite igual en ambos reportes.
 
-Dependencias principales (ver `pyproject.toml`):
+Dependencias de ejecucion (ver `requirements.txt`):
 
-- `fastapi[standard]` — framework web y CLI.
+- `fastapi` — framework web.
 - `xhtml2pdf` — conversion de HTML/CSS a PDF.
-- `jinja2` — motor de plantillas (incluido con `fastapi[standard]`).
+- `jinja2` — motor de plantillas.
 
 ## Estructura del proyecto
 
 ```
 .
 ├── main.py               # Aplicacion FastAPI: rutas (preview y PDF)
-├── pyproject.toml        # Dependencias y entrypoint de FastAPI
+├── requirements.txt      # Dependencias fijadas de la aplicacion
+├── vercel.json           # Empaquetado de templates/ y assets/ para Vercel
+├── .python-version       # Version de Python
 ├── assets/
 │   └── logo.png          # Logo de ejemplo (servido en web y leido en el PDF)
 ├── templates/
@@ -36,6 +38,15 @@ Dependencias principales (ver `pyproject.toml`):
 │   └── report_logo.html  # Igual que report.html pero incluye el logo
 └── README.md
 ```
+
+## Despliegue en Vercel
+
+El proyecto expone la instancia `app` desde `main.py`, que Vercel detecta como una
+aplicacion FastAPI. `requirements.txt` fija las dependencias de ejecucion y
+`vercel.json` incluye las plantillas y el logo que la funcion necesita. Para
+desplegarlo, importa el repositorio en Vercel y usa el directorio raiz como
+directorio del proyecto; no hace falta configurar un comando de inicio ni rutas
+manuales.
 
 ## Rutas
 
